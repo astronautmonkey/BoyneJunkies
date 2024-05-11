@@ -1,0 +1,936 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: player_stats
+    label: Player Stats
+    folder: cms/player-stats
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_handicap
+        label: Handicap
+        widget: string
+        required: false
+      - hint: ''
+        name: f_embed
+        label: Embed
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: player-stats
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[player-stats].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: projects
+    label: Projects
+    folder: cms/projects
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Project name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Project details
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_featured-on-homepage
+        label: Featured on homepage
+        widget: boolean
+        required: false
+        default: false
+      - hint: ''
+        name: f_brief-project-description
+        label: Brief project description
+        widget: string
+        required: false
+      - hint: ''
+        name: f_project-image
+        label: Project image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_alt-text-for-project-image
+        label: Alt text for project image
+        widget: string
+        required: false
+      - hint: ''
+        name: f_project-color
+        label: Project color
+        widget: color
+        required: false
+        enableAlpha: true
+        allowInput: true
+      - hint: ''
+        name: f_project-type
+        label: Project type
+        widget: select
+        required: false
+        options:
+          - label: Logo design
+            value: Logo design
+          - label: Web design
+            value: Web design
+          - label: Print design
+            value: Print design
+          - label: Branding / Identity
+            value: Branding / Identity
+      - hint: ''
+        name: f_project-year
+        label: Project year
+        widget: string
+        required: false
+      - hint: ''
+        name: f_client-name
+        label: Client name
+        widget: string
+        required: false
+      - hint: ''
+        name: f_project-link
+        label: Project link
+        widget: string
+        required: false
+      - hint: ''
+        name: f_project-images
+        label: Project images
+        widget: list
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: (Optional) Quote from the project
+        name: f_project-testimonial
+        label: Project testimonial
+        widget: text
+        required: false
+      - hint: (Optional) Put the author of the quote here
+        name: f_project-testimonial-by
+        label: Project testimonial by
+        widget: string
+        required: false
+      - hint: ''
+        name: f_website-images
+        label: Website Images
+        widget: list
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: projects
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[projects].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: This content is password protected, key: -2cf6772a'
+            label: Text
+            name: '-2cf6772a'
+            widget: string
+          - hint: >-
+              Original text: Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Suspendisse varius enim in eros., key: -731a7d53
+            label: Text
+            name: '-731a7d53'
+            widget: string
+          - hint: 'Original text: Password, key: 4c641ebb'
+            label: Text
+            name: 4c641ebb
+            widget: string
+          - hint: >-
+              Original text: Incorrect password. Please try again., key:
+              -f5c4b5f
+            label: Text
+            name: '-f5c4b5f'
+            widget: string
+          - hint: 'Original text: Page not found, key: 49a057c4'
+            label: Text
+            name: 49a057c4
+            widget: string
+          - hint: 'Original text: 404, key: c938'
+            label: Text
+            name: c938
+            widget: string
+          - hint: >-
+              Original text: The page you are looking for doesn't exist or has
+              been moved., key: 583f3656
+            label: Text
+            name: 583f3656
+            widget: string
+          - hint: 'Original text: Back to homepage, key: 2948e5a'
+            label: Text
+            name: 2948e5a
+            widget: string
+          - hint: 'Original text: Players, key: 45cd5992'
+            label: Text
+            name: 45cd5992
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: Standings, key: -f239279'
+            label: Text
+            name: '-f239279'
+            widget: string
+          - hint: 'Original text: Match Entry Form, key: 3510214d'
+            label: Text
+            name: 3510214d
+            widget: string
+          - hint: 'Original text: Boyne Junkies, key: -40f0a94e'
+            label: Text
+            name: '-40f0a94e'
+            widget: string
+          - hint: 'Original text: Mulligans, key: 21e337c0'
+            label: Text
+            name: 21e337c0
+            widget: string
+          - hint: 'Original text: Match History, key: 6a2b8cf9'
+            label: Text
+            name: 6a2b8cf9
+            widget: string
+          - hint: 'Original text: Welcome, key: -5347ccbe'
+            label: Text
+            name: '-5347ccbe'
+            widget: string
+          - hint: 'Original text: Schedule, key: -25bf0949'
+            label: Text
+            name: '-25bf0949'
+            widget: string
+          - hint: 'Original text: Rules, key: 4ba58d7'
+            label: Text
+            name: 4ba58d7
+            widget: string
+          - hint: 'Original text: Current Standings, key: 264acb80'
+            label: Text
+            name: 264acb80
+            widget: string
+          - hint: 'Original text: Opening Scramble Results, key: -714e0475'
+            label: Text
+            name: '-714e0475'
+            widget: string
+          - hint: 'Original text: Team 1, key: -6aebf0b2'
+            label: Text
+            name: '-6aebf0b2'
+            widget: string
+          - hint: 'Original text: Blake, Travis, Jay, Tyler, key: 77bc2f94'
+            label: Text
+            name: 77bc2f94
+            widget: string
+          - hint: 'Original text: Front, key: 40fee09'
+            label: Text
+            name: 40fee09
+            widget: string
+          - hint: 'Original text: Back, key: 1f7907'
+            label: Text
+            name: 1f7907
+            widget: string
+          - hint: 'Original text: Score, key: 4c04e72'
+            label: Text
+            name: 4c04e72
+            widget: string
+          - hint: 'Original text: -2 (2nd), key: -2f8c6652'
+            label: Text
+            name: '-2f8c6652'
+            widget: string
+          - hint: 'Original text: -5 (1st), key: 6f25ebc7'
+            label: Text
+            name: 6f25ebc7
+            widget: string
+          - hint: 'Original text: FiR, key: 113cf'
+            label: Text
+            name: 113cf
+            widget: string
+          - hint: 'Original text: -, key: 2d'
+            label: Text
+            name: 2d
+            widget: string
+          - hint: 'Original text: Yes, key: 15ac7'
+            label: Text
+            name: 15ac7
+            widget: string
+          - hint: 'Original text: GiR, key: 11790'
+            label: Text
+            name: '11790'
+            widget: string
+          - hint: 'Original text: Points, key: -712eb6fd'
+            label: Text
+            name: '-712eb6fd'
+            widget: string
+          - hint: 'Original text: 3, key: 33'
+            label: Text
+            name: '33'
+            widget: string
+          - hint: 'Original text: 8, key: 38'
+            label: Text
+            name: '38'
+            widget: string
+          - hint: 'Original text: Total, key: 4d3eb24'
+            label: Text
+            name: 4d3eb24
+            widget: string
+          - hint: 'Original text: 11, key: 620'
+            label: Text
+            name: '620'
+            widget: string
+          - hint: 'Original text: Team 2, key: -6aebf0b1'
+            label: Text
+            name: '-6aebf0b1'
+            widget: string
+          - hint: 'Original text: Kyle, Andy, Blaize, Dan, key: 487e38af'
+            label: Text
+            name: 487e38af
+            widget: string
+          - hint: 'Original text: -3 (T-1st), key: 4c93179e'
+            label: Text
+            name: 4c93179e
+            widget: string
+          - hint: 'Original text: -4 (2nd), key: 3a401030'
+            label: Text
+            name: 3a401030
+            widget: string
+          - hint: 'Original text: 5, key: 35'
+            label: Text
+            name: '35'
+            widget: string
+          - hint: 'Original text: 4, key: 34'
+            label: Text
+            name: '34'
+            widget: string
+          - hint: 'Original text: 9, key: 39'
+            label: Text
+            name: '39'
+            widget: string
+          - hint: 'Original text: Team 3, key: -6aebf0b0'
+            label: Text
+            name: '-6aebf0b0'
+            widget: string
+          - hint: 'Original text: Brett, Dave, Mark, Ryan, key: 74fa155e'
+            label: Text
+            name: 74fa155e
+            widget: string
+          - hint: 'Original text: -3 (3rd), key: 55a5852'
+            label: Text
+            name: 55a5852
+            widget: string
+          - hint: 'Original text: 6, key: 36'
+            label: Text
+            name: '36'
+            widget: string
+          - hint: 'Original text: 1, key: 31'
+            label: Text
+            name: '31'
+            widget: string
+          - hint: 'Original text: 7, key: 37'
+            label: Text
+            name: '37'
+            widget: string
+          - hint: 'Original text: Team 4, key: -6aebf0af'
+            label: Text
+            name: '-6aebf0af'
+            widget: string
+          - hint: 'Original text: Brandon, Paul, Aaron, Micah, key: 3e06c7bf'
+            label: Text
+            name: 3e06c7bf
+            widget: string
+          - hint: 'Original text: -1 (4th), key: -6471a1d3'
+            label: Text
+            name: '-6471a1d3'
+            widget: string
+          - hint: 'Original text: 2, key: 32'
+            label: Text
+            name: '32'
+            widget: string
+          - hint: 'Original text: Week 3, key: -65cb9cd9'
+            label: Text
+            name: '-65cb9cd9'
+            widget: string
+          - hint: 'Original text: Completed by 5/25/24, key: 51431980'
+            label: Text
+            name: '51431980'
+            widget: string
+          - hint: 'Original text: Blake, key: 3d4a0d1'
+            label: Text
+            name: 3d4a0d1
+            widget: string
+          - hint: 'Original text: Micah, key: 46e4c8e'
+            label: Text
+            name: 46e4c8e
+            widget: string
+          - hint: 'Original text: Andy, key: 1f35a2'
+            label: Text
+            name: 1f35a2
+            widget: string
+          - hint: 'Original text: Kyle, key: 23eb87'
+            label: Text
+            name: 23eb87
+            widget: string
+          - hint: 'Original text: Aaron, key: 3c1c991'
+            label: Text
+            name: 3c1c991
+            widget: string
+          - hint: 'Original text: Tyler, key: 4d85954'
+            label: Text
+            name: 4d85954
+            widget: string
+          - hint: 'Original text: Ryan, key: 2718d4'
+            label: Text
+            name: 2718d4
+            widget: string
+          - hint: 'Original text: Brett, key: 3d76b35'
+            label: Text
+            name: 3d76b35
+            widget: string
+          - hint: 'Original text: Paul, key: 25d868'
+            label: Text
+            name: 25d868
+            widget: string
+          - hint: 'Original text: Dan, key: 10b71'
+            label: Text
+            name: 10b71
+            widget: string
+          - hint: 'Original text: Jay, key: 12202'
+            label: Text
+            name: '12202'
+            widget: string
+          - hint: 'Original text: Travis, key: -6a349443'
+            label: Text
+            name: '-6a349443'
+            widget: string
+          - hint: 'Original text: Mark, key: 247aed'
+            label: Text
+            name: 247aed
+            widget: string
+          - hint: 'Original text: Brandon, key: 6b6e2b86'
+            label: Text
+            name: 6b6e2b86
+            widget: string
+          - hint: 'Original text: Blaize, key: 76bf74bd'
+            label: Text
+            name: 76bf74bd
+            widget: string
+          - hint: 'Original text: Dave, key: 20640c'
+            label: Text
+            name: 20640c
+            widget: string
+          - hint: 'Original text: Week 4, key: -65cb9cd8'
+            label: Text
+            name: '-65cb9cd8'
+            widget: string
+          - hint: 'Original text: Completed by 6/8/24, key: -3db9f61a'
+            label: Text
+            name: '-3db9f61a'
+            widget: string
+          - hint: 'Original text: Week 5, key: -65cb9cd7'
+            label: Text
+            name: '-65cb9cd7'
+            widget: string
+          - hint: 'Original text: Completed by 6/22/24, key: -79d8085c'
+            label: Text
+            name: '-79d8085c'
+            widget: string
+          - hint: 'Original text: Week 6, key: -65cb9cd6'
+            label: Text
+            name: '-65cb9cd6'
+            widget: string
+          - hint: 'Original text: Completed by 7/6/24, key: -3c060639'
+            label: Text
+            name: '-3c060639'
+            widget: string
+          - hint: 'Original text: Week 7, key: -65cb9cd5'
+            label: Text
+            name: '-65cb9cd5'
+            widget: string
+          - hint: 'Original text: Completed by 7/20/24, key: -44f2b5d9'
+            label: Text
+            name: '-44f2b5d9'
+            widget: string
+          - hint: 'Original text: Week 8, key: -65cb9cd4'
+            label: Text
+            name: '-65cb9cd4'
+            widget: string
+          - hint: 'Original text: Completed by 8/3/24, key: -3a528ab7'
+            label: Text
+            name: '-3a528ab7'
+            widget: string
+          - hint: 'Original text: Week 9, key: -65cb9cd3'
+            label: Text
+            name: '-65cb9cd3'
+            widget: string
+          - hint: 'Original text: Completed by 8/17/24, key: -10176380'
+            label: Text
+            name: '-10176380'
+            widget: string
+          - hint: 'Original text: Week 10, key: -53a7fe55'
+            label: Text
+            name: '-53a7fe55'
+            widget: string
+          - hint: 'Original text: Completed by 8/31/24, key: -ffdeeb8'
+            label: Text
+            name: '-ffdeeb8'
+            widget: string
+          - hint: 'Original text: 2024 Rules, key: -38bede49'
+            label: Text
+            name: '-38bede49'
+            widget: string
+          - hint: 'Original text: Lie, key: 12a68'
+            label: Text
+            name: 12a68
+            widget: string
+          - hint: >-
+              Original text: Team's lie cannot be improved. Drop within one club
+              length distance. , key: -5529451e
+            label: Text
+            name: '-5529451e'
+            widget: string
+          - hint: >-
+              Original text: If a ball is out of bounds, take a drop where it
+              went in with penalty stroke., key: -7eb3b1b2
+            label: Text
+            name: '-7eb3b1b2'
+            widget: string
+          - hint: 'Original text: Interuptions, key: -6e9a1618'
+            label: Text
+            name: '-6e9a1618'
+            widget: string
+          - hint: >-
+              Original text: Winning team gets to decide whether to restart the
+              the match to play 9 more holes or just play the unfinished holes
+              at the next opportunity., key: 690668d3
+            label: Text
+            name: 690668d3
+            widget: text
+          - hint: 'Original text: Scoring, key: -2a196951'
+            label: Text
+            name: '-2a196951'
+            widget: string
+          - hint: >-
+              Original text: Win= 5 | Loss= 0 | OT loss=2 | Eagle: 2 | GIR: 2 |
+              FIR: 1 | Chip in: 1 , key: 15abe6ab
+            label: Text
+            name: 15abe6ab
+            widget: string
+          - hint: >-
+              Original text: Hole in one- 12 player who gets it, partner gets 2,
+              key: 545174c9
+            label: Text
+            name: 545174c9
+            widget: string
+          - hint: >-
+              Original text: Mulligans must be used by person who has them.,
+              key: -2a68f515
+            label: Text
+            name: '-2a68f515'
+            widget: string
+          - hint: >-
+              Original text: Tier review mid season based on scores., key:
+              -11685aac
+            label: Text
+            name: '-11685aac'
+            widget: string
+          - hint: 'Original text: Link, key: 24241a'
+            label: Text
+            name: 24241a
+            widget: string
+          - hint: 'Original text: Link 2, key: -78547654'
+            label: Text
+            name: '-78547654'
+            widget: string
+          - hint: 'Original text: Enter Match Results, key: 24e60cf3'
+            label: Text
+            name: 24e60cf3
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: /scores/, key: -7afad2e1'
+            label: Link
+            name: '-7afad2e1'
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: i308e2f99
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i542db529
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 47cc9381
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-3ea1eec7'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 2d7f37b5
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-76a76bce'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-542db529'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-43882078'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
